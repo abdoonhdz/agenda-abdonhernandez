@@ -1,0 +1,48 @@
+<router-outlet></router-outlet>
+
+<div class="main d-flex flex-column align-items-center justify-content-center">
+
+  <h1 class="mt-5 text-center display-5 fw-bold">Agenda de contactos</h1>
+
+<div class="botones container-fluid d-flex justify-content-evenly my-5">
+  <button (click)="anadirContacto()" class="btn btn-primary">Añadir contacto</button>
+  <button (click)="borrarAgenda()" class="btn btn-danger">Borrar agenda</button>
+</div>
+
+<div class="modal" [ngClass]="{'open': mostrarModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar contacto</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" [formControl]="nombreControl" class="form-control" (keyup)="nombreContacto($event)" value="{{ nombre() }}" placeholder="Ej: Pedro" required>
+            <span [className]="nombreControl.invalid && nombreControl.touched ? 'mostrarError' : 'ocultarError'">Debe tener mínimo 5 caracteres</span>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" [formControl]="telefonoControl" class="form-control" (keyup)="telefonoContacto($event)" value="{{ telefono() }}" placeholder="Ej: 678901234" required>
+            <span [className]="telefonoControl.invalid && telefonoControl.touched ? 'mostrarError' : 'ocultarError'">Mínimo 9 números</span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="agregarContacto()">Agregar</button>
+        <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@for (item of this.contactos(); track $index) {
+  <div class="card text-center my-2" style="width: 18rem;">
+      <h5 class="card-title">{{ item.nombre }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ item.telefono }}</h6>
+      <button (click)="borrarContacto(item.id)" class="btn btn-danger">Borrar</button>
+  </div>
+}
+
+</div>

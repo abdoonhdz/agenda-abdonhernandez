@@ -1,0 +1,16 @@
+.modal {
+    display: none;
+}
+
+.modal.open {
+    display: block;
+}
+
+.mostrarError {
+    display: block;
+    color: red;
+}
+
+.ocultarError {
+    display: none;
+}
